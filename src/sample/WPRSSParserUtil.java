@@ -1,6 +1,5 @@
 package sample;
 
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,9 +9,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TreeSet;
 
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.fluent.Form;
-import org.apache.http.client.fluent.Request;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -79,6 +75,7 @@ public class WPRSSParserUtil {
 		feed.setLastBuildDate(getFeedLastPubDate(channel));
 		feed.setTitle(getFeedTitle(channel));
 		feed.setLink(getFeedLink(channel));
+		feed.setDateAdded(new Date());
 		TreeSet<String> cat=new TreeSet<String>();
 		for(WordPressRSSItem item:feed.getItems())
 		{

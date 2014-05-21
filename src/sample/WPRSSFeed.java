@@ -13,6 +13,7 @@ public class WPRSSFeed {
 	private String language;
 	private Set<String> categories;
 	private List<WordPressRSSItem> items;
+	private Date dateAdded;
 	
 	public String getTitle() {
 		return title;
@@ -55,6 +56,12 @@ public class WPRSSFeed {
 	}
 	public void setItems(List<WordPressRSSItem> items) {
 		this.items = items;
+	}
+	public Date getDateAdded() {
+		return dateAdded;
+	}
+	public void setDateAdded(Date dateAdded) {
+		this.dateAdded = dateAdded;
 	}
 	
 	

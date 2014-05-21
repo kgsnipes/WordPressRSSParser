@@ -17,7 +17,7 @@ public class ParserSample {
 		ObjectMapper mapper=new ObjectMapper();
 		String url="https://wordpress.org/showcase/feed/";
 		String url1="http://ravindranr.wordpress.com/feed/";
-		System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(WPRSSParserUtil.getWPRSSFeed(WPRSSParserUtil.getRSSDocument(url1))));
+		System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(WPRSSParserUtil.getWPRSSFeed(WPRSSParserUtil.getRSSDocument(url))));
 		
 		
 		
