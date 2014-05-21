@@ -16,7 +16,7 @@ public class WordPressRSSItem {
 	private String content;
 	private String commentRssLink;
 	private Integer comments;
-	
+	private List<String> mediaImages;
 	
 	public String getTitle() {
 		return title;
@@ -83,6 +83,12 @@ public class WordPressRSSItem {
 	}
 	public void setComments(Integer comments) {
 		this.comments = comments;
+	}
+	public List<String> getMediaImages() {
+		return mediaImages;
+	}
+	public void setMediaImages(List<String> mediaImages) {
+		this.mediaImages = mediaImages;
 	}
 	
 	

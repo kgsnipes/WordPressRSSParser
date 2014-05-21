@@ -10,6 +10,7 @@ import java.util.Locale;
 import java.util.TreeSet;
 
 import org.dom4j.Document;
+import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 
@@ -111,6 +112,7 @@ public class WPRSSParserUtil {
 		retVal.setContent(getContent(item));
 		retVal.setCommentRssLink(getRSSCommentsLink(item));
 		retVal.setComments(getCommentsCount(item));
+		retVal.setMediaImages(getImageMedia(item));
 		return retVal;
 		
 	}
@@ -166,9 +168,16 @@ public class WPRSSParserUtil {
 	public static String getCreator(Node item)
 	{
 		String retVal=null;
-		if(item.selectSingleNode("dc:creator")!=null)
+		try
 		{
-			retVal=item.selectSingleNode("dc:creator").getText().trim();
+			if(item.selectSingleNode("dc:creator")!=null)
+			{
+				retVal=item.selectSingleNode("dc:creator").getText().trim();
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
 		}
 		return retVal;
 	}
@@ -212,19 +221,34 @@ public class WPRSSParserUtil {
 	public static String getContent(Node item)
 	{
 		String retVal=null;
-		if(item.selectSingleNode("content:encoded")!=null)
+		try
 		{
-			retVal=item.selectSingleNode("content:encoded").getText().trim();
+			if(item.selectSingleNode("content:encoded")!=null)
+			{
+				retVal=item.selectSingleNode("content:encoded").getText().trim();
+			}
 		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
 		return retVal;
 	}
 	
 	public static String getRSSCommentsLink(Node item)
 	{
 		String retVal=null;
-		if(item.selectSingleNode("wfw:commentRss")!=null)
+		try
 		{
-			retVal=item.selectSingleNode("wfw:commentRss").getText().trim();
+			if(item.selectSingleNode("wfw:commentRss")!=null)
+			{
+				retVal=item.selectSingleNode("wfw:commentRss").getText().trim();
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
 		}
 		return retVal;
 	}
@@ -232,9 +256,16 @@ public class WPRSSParserUtil {
 	public static Integer getCommentsCount(Node item)
 	{
 		Integer retVal=null;
-		if(item.selectSingleNode("slash:comments")!=null)
+		try
 		{
-			retVal=Integer.parseInt(item.selectSingleNode("slash:comments").getText().trim());
+			if(item.selectSingleNode("slash:comments")!=null)
+			{
+				retVal=Integer.parseInt(item.selectSingleNode("slash:comments").getText().trim());
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
 		}
 		return retVal;
 	}
@@ -293,6 +324,24 @@ public class WPRSSParserUtil {
 		if(item.selectSingleNode("language")!=null)
 		{
 			retVal=item.selectSingleNode("language").getText().trim();
+		}
+		return retVal;
+	}
+	
+	public static List<String> getImageMedia(Node item)
+	{
+		List<String> retVal=new ArrayList<String>();
+		try
+		{
+			if(item.selectNodes("media:content[@medium='image']")!=null && item.selectNodes("media:content[@medium='image']").size()>0)
+			{
+				for(Node n:(List<Node>)item.selectNodes("media:content[@medium='image']"))
+						retVal.add(((Element)n).attributeValue("url"));
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
 		}
 		return retVal;
 	}
