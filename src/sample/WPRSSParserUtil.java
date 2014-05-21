@@ -14,6 +14,39 @@ import org.dom4j.io.SAXReader;
 
 public class WPRSSParserUtil {
 	
+	
+	public static String getRSSFeedURL(String domain)
+	{
+		return getDomain(domain)+"/feed/";
+	}
+	
+	public static String getRSSFeedURLForCategories(String domain,List<String> categories)
+	{
+		StringBuffer buf=new StringBuffer();
+		buf.append("/");
+		for(String s:categories)
+		{
+			buf.append(s+",");
+		}
+		buf.deleteCharAt(buf.length()-1);
+
+		 return getDomain(domain)+buf.toString()+"/feed/";
+	}
+	
+	public static String getRSSFeedURLForAPost(String postURL)
+	{
+		
+		 return postURL+"feed/?withoutcomments=1";
+	}
+	
+	public static String getDomain(String domain)
+	{
+		if(domain.endsWith("/"))
+			return domain.substring(0, domain.lastIndexOf("/")-1);
+		else
+			return domain;
+	}
+	
 	public static Document getRSSDocument(String url)
 	{
 		Document document=null;
