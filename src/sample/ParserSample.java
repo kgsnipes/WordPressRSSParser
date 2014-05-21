@@ -19,8 +19,8 @@ public class ParserSample {
 		String url1="http://ravindranr.wordpress.com/feed/";
 		System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(WPRSSParserUtil.getWPRSSFeed(WPRSSParserUtil.getRSSDocument(url1))));
 		
-		//String [] cat=new String[]{"hello","hI"};
-		//System.out.println(WPRSSParserUtil.getRSSFeedURLForCategories("domain",Arrays.asList(cat)));
+		
+		
 		
 	}
 }

@@ -1,5 +1,6 @@
 package sample;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,6 +10,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TreeSet;
 
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.fluent.Form;
+import org.apache.http.client.fluent.Request;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -25,7 +29,7 @@ public class WPRSSParserUtil {
 	public static String getRSSFeedURLForCategories(String domain,List<String> categories)
 	{
 		StringBuffer buf=new StringBuffer();
-		buf.append("/");
+		buf.append("/tag/");
 		for(String s:categories)
 		{
 			buf.append(s+",");
@@ -345,6 +349,9 @@ public class WPRSSParserUtil {
 		}
 		return retVal;
 	}
+	
+	
+	
 
 
 }
