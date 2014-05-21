@@ -16,6 +16,8 @@ public class WordPressRSSItem {
 	private String content;
 	private String commentRssLink;
 	private Integer comments;
+	
+	
 	public String getTitle() {
 		return title;
 	}

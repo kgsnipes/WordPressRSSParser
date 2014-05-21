@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TreeSet;
 
 import org.dom4j.Document;
 import org.dom4j.Node;
@@ -61,6 +62,27 @@ public class WPRSSParserUtil {
 		 }
 	     
 		 return document;  
+	}
+	
+	public static WPRSSFeed getWPRSSFeed(Document doc)
+	{
+		WPRSSFeed feed=new WPRSSFeed();
+		feed.setItems(getItems(doc));
+		Node channel=doc.selectSingleNode("/rss/channel");
+		feed.setDescription(getFeedDescription(channel));
+		feed.setLanguage(getFeedLanguage(channel));
+		feed.setLastBuildDate(getFeedLastPubDate(channel));
+		feed.setTitle(getFeedTitle(channel));
+		feed.setLink(getFeedLink(channel));
+		TreeSet<String> cat=new TreeSet<String>();
+		for(WordPressRSSItem item:feed.getItems())
+		{
+			cat.addAll(item.getCategories());
+			
+		}
+		feed.setCategories(cat);
+		
+		return feed;
 	}
 	
 	public static List<WordPressRSSItem> getItems(Document doc)
@@ -213,6 +235,64 @@ public class WPRSSParserUtil {
 		if(item.selectSingleNode("slash:comments")!=null)
 		{
 			retVal=Integer.parseInt(item.selectSingleNode("slash:comments").getText().trim());
+		}
+		return retVal;
+	}
+	
+	public static String getFeedTitle(Node item)
+	{
+		String retVal=null;
+		if(item.selectSingleNode("title")!=null)
+		{
+			retVal=item.selectSingleNode("title").getText().trim();
+		}
+		return retVal;
+	}
+	
+	public static String getFeedDescription(Node item)
+	{
+		String retVal=null;
+		if(item.selectSingleNode("description")!=null)
+		{
+			retVal=item.selectSingleNode("description").getText().trim();
+		}
+		return retVal;
+	}
+	public static String getFeedLink(Node item)
+	{
+		String retVal=null;
+		if(item.selectSingleNode("link")!=null)
+		{
+			retVal=item.selectSingleNode("link").getText().trim();
+		}
+		return retVal;
+	}
+	
+	public static Date getFeedLastPubDate(Node item)
+	{
+		Date retVal=null;
+		if(item.selectSingleNode("lastBuildDate")!=null)
+		{
+			String date=item.selectSingleNode("lastBuildDate").getText().trim();
+			
+			DateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+			try {
+				retVal = formatter.parse(date);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return retVal;
+	}
+	
+	public static String getFeedLanguage(Node item)
+	{
+		String retVal=null;
+		if(item.selectSingleNode("language")!=null)
+		{
+			retVal=item.selectSingleNode("language").getText().trim();
 		}
 		return retVal;
 	}
