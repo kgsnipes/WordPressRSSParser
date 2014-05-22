@@ -178,7 +178,7 @@ public class WPRSSParserUtil {
 		}
 		catch(Exception ex)
 		{
-			ex.printStackTrace();
+			//ex.printStackTrace();
 		}
 		return retVal;
 	}
@@ -231,7 +231,7 @@ public class WPRSSParserUtil {
 		}
 		catch(Exception ex)
 		{
-			ex.printStackTrace();
+			//ex.printStackTrace();
 		}
 		
 		return retVal;
@@ -249,7 +249,7 @@ public class WPRSSParserUtil {
 		}
 		catch(Exception ex)
 		{
-			ex.printStackTrace();
+			//ex.printStackTrace();
 		}
 		return retVal;
 	}
@@ -266,7 +266,7 @@ public class WPRSSParserUtil {
 		}
 		catch(Exception ex)
 		{
-			ex.printStackTrace();
+			//ex.printStackTrace();
 		}
 		return retVal;
 	}
@@ -342,7 +342,7 @@ public class WPRSSParserUtil {
 		}
 		catch(Exception ex)
 		{
-			ex.printStackTrace();
+			//ex.printStackTrace();
 		}
 		return retVal;
 	}
