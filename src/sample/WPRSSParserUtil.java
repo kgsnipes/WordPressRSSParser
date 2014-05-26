@@ -41,6 +41,12 @@ public class WPRSSParserUtil {
 		 return postURL+"feed/?withoutcomments=1";
 	}
 	
+	public static String getRSSCommentFeedURLForAPost(final String postURL)
+	{
+
+		return postURL + "?withcomments=1";
+	}
+	
 	public static String getDomain(String domain)
 	{
 		if(domain.endsWith("/"))
@@ -87,6 +93,21 @@ public class WPRSSParserUtil {
 		return feed;
 	}
 	
+	public static WPRSSCommentFeed getWPRSSCommentFeed(Document doc)
+	{
+		WPRSSCommentFeed feed=new WPRSSCommentFeed();
+		feed.setItems(getCommentItems(doc));
+		Node channel=doc.selectSingleNode("/rss/channel");
+		feed.setDescription(getFeedDescription(channel));
+		feed.setLanguage(getFeedLanguage(channel));
+		feed.setLastBuildDate(getFeedLastPubDate(channel));
+		feed.setTitle(getFeedTitle(channel));
+		feed.setLink(getFeedLink(channel));
+		feed.setDateAdded(new Date());
+		
+		return feed;
+	}
+	
 	public static List<WordPressRSSItem> getItems(Document doc)
 	{
 		List<WordPressRSSItem> retVal=new ArrayList<WordPressRSSItem>();
@@ -96,6 +117,33 @@ public class WPRSSParserUtil {
 			 retVal.add(getItem(n));
 		 }
 		 return retVal;
+	}
+	
+	public static List<WordPressCommentRSSItem> getCommentItems(Document doc)
+	{
+		List<WordPressCommentRSSItem> retVal=new ArrayList<WordPressCommentRSSItem>();
+		 
+		 for(Node n:(List<Node>)doc.selectNodes("/rss/channel/item"))
+		 {
+			 retVal.add(getCommentItem(n));
+		 }
+		 return retVal;
+	}
+	
+	public static WordPressCommentRSSItem getCommentItem(Node item)
+	{
+		WordPressCommentRSSItem retVal=new WordPressCommentRSSItem();
+		
+		retVal.setTitle(getTitle(item));
+		retVal.setLink(getLink(item));
+		retVal.setPublishDate(getPublishDate(item));
+		retVal.setCreator(getCreator(item));
+		retVal.setGuid(getGuid(item));
+		retVal.setDescription(getDescription(item));
+		retVal.setContent(getContent(item));		
+		retVal.setMediaImages(getImageMedia(item));
+		return retVal;
+		
 	}
 	
 	public static WordPressRSSItem getItem(Node item)
