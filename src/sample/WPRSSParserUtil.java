@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.TreeSet;
@@ -13,6 +14,8 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
+import org.jsoup.Jsoup;
+import org.jsoup.select.Elements;
 
 public class WPRSSParserUtil {
 	
@@ -61,6 +64,7 @@ public class WPRSSParserUtil {
 		 SAXReader reader = new SAXReader();
 		 try
 		 {
+			 
 			 document = reader.read(url);
 		 }
 		 catch(Exception ex)
@@ -171,6 +175,7 @@ public class WPRSSParserUtil {
 		String retVal=null;
 		if(item.selectSingleNode("title")!=null)
 		{
+			
 			retVal=item.selectSingleNode("title").getText().trim();
 		}
 		return retVal;
@@ -261,7 +266,12 @@ public class WPRSSParserUtil {
 		String retVal=null;
 		if(item.selectSingleNode("description")!=null)
 		{
-			retVal=item.selectSingleNode("description").getText().trim();
+			String temp="<html><head><title></title></head><body>"+item.selectSingleNode("description").getText().trim()+"</body></html>";
+			org.jsoup.nodes.Document doc = Jsoup.parse(temp);
+			Elements newsHeadlines = doc.select("p a[href*=wordpress.com]").remove();
+			retVal=doc.text();
+			//System.out.println("read more "+doc.text());
+			//retVal=item.selectSingleNode("description").getText().trim();
 		}
 		return retVal;
 	}
